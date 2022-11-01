@@ -1,2 +1,51 @@
 import parcelas.*
+import plantas.*
 
+//Si intentaramos agregar una quinta planta, se superaría la cantidad máxima y nos arrojaría un error.
+
+describe "Test de Parcelas"  {
+	
+	const menta1 = new Menta(anioDeObtencion = 2022, altura = 1)
+	const menta2 = new Menta(anioDeObtencion = 2022, altura = 0.3)
+	const soja1 = new Soja(anioDeObtencion = 2009, altura = 0.6)
+	const soja2 = new Soja(anioDeObtencion = 2009, altura = 1.5)
+	const quinoa1 = new Quinoa(tolerancia = 12, anioDeObtencion = 2010, altura = 1)
+	const quinoa2 = new Quinoa(tolerancia = 9, anioDeObtencion = 2001, altura = 1)
+	const quinoa3 = new Quinoa(tolerancia = 5, anioDeObtencion = 2001, altura = 1)
+	
+	const sojaTransgenica1 = new SojaTransgenica(anioDeObtencion = 2009, altura = 0.6)
+	const hierbabuena1 = new Hierbabuena(anioDeObtencion = 2022, altura = 1)
+	
+	const parcela1 = new Parcela(ancho = 20, largo = 1, horasDeSol = 8)
+	
+	
+	test "Parcela de 20x1m que recibe 8 horas de sol, tiene 20m2 de superficie y tolera hasta 4" {
+		
+		assert.equals(20, parcela1.superficie())
+		assert.equals(4, parcela1.cantidadMaxima())
+	}
+	
+	test "Parcela1 no tiene complicaciones con 4, pero sí con 5 plantas (por espacio)" {
+		
+		parcela1.plantar(soja2)
+		parcela1.plantar(soja2)
+		parcela1.plantar(soja2)
+		parcela1.plantar(soja2)
+		
+		assert.notThat(parcela1.tieneComplicaciones())
+		
+		parcela1.plantar(soja2)
+		
+		assert.throwsExceptionWithMessage("No hay más espacio para plantar", {parcela1.plantar(soja2)})
+	}
+	
+	test "Quinoa3 no podría con el calor del sol de parcela1" {
+		
+		parcela1.plantar(quinoa3) 
+		
+		assert.throwsExceptionWithMessage("La planta no tolera las horas de calor", {parcela1.plantar(quinoa3)})
+	}
+	
+	
+}
+	

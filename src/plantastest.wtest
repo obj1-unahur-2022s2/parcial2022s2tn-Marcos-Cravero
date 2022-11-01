@@ -1,18 +1,59 @@
 import plantas.*
+
 describe "Test de Plantas"  {
 	
-	const menta1 = new Menta()
+	const menta1 = new Menta(anioDeObtencion = 2022, altura = 1)
+	const menta2 = new Menta(anioDeObtencion = 2022, altura = 0.3)
+	const soja1 = new Soja(anioDeObtencion = 2009, altura = 0.6)
+	const quinoa1 = new Quinoa(tolerancia = 12, anioDeObtencion = 2010, altura = 1)
+	const quinoa2 = new Quinoa(tolerancia = 9, anioDeObtencion = 2001, altura = 1)
+	
+	const sojaTransgenica1 = new SojaTransgenica(anioDeObtencion = 2009, altura = 0.6)
+	const hierbabuena1 = new Hierbabuena(anioDeObtencion = 2022, altura = 1)
 	
 	method initialize() {
-		menta1.valor(3)
-	}
-	
-	test "Menta - test de ejemplo" {
-		assert.equals(3, menta1.valor())
 
 	}
 	
+	test "Menta de 1m da semillas y ocupa 3m2" {
+		
+		assert.that(menta1.daSemillas())
+		assert.equals(3, menta1.espacio())
+	}
+	
+	test "Menta de 0.3m no da semillas y ocupa 0.9m2" {
+		
+		assert.notThat(menta2.daSemillas())
+		assert.equals(0.9, menta2.espacio())
+	}
+	
+	test "Soja de 0.6m no da semillas, tiene 7 horas de tolerancia (año 2009) y ocupa 0.3m2" {
+		
+		assert.notThat(soja1.daSemillas())
+		assert.equals(7, soja1.tolerancia())
+		assert.equals(0.3, soja1.espacio())	
+	}
+	
+	test "Quinoa da semillas, tolera 12 horas, origen 2010" {
+		
+		assert.that(quinoa1.daSemillas())
+		assert.equals(12, quinoa1.tolerancia())
+	} 
+	
+	test "Quinoa da semillas, tolera 9 horas, origen 2001" {
+		
+		assert.that(quinoa2.daSemillas())
+		assert.equals(9, quinoa2.tolerancia())
+	} 
+	
+	test "Soja transgénica no da semillas" {
+		
+		assert.notThat(sojaTransgenica1.daSemillas())
+	}
+	
+	test "Hierbabuena ocupa el doble de una menta" {
+		
+		 assert.equals(menta1.espacio() * 2, hierbabuena1.espacio())
+	}
 }
-
-
 
