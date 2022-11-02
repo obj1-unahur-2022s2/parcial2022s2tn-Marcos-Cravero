@@ -4,7 +4,7 @@ class Parcela {
 	var property ancho
 	var property largo
 	var property horasDeSol
-	var property plantas = []
+	const property plantas = []
 	
 	method superficie() = ancho * largo
 	
@@ -31,8 +31,35 @@ class Parcela {
 		} else {
 			plantas.add(unaPlanta)
 		}
+	}	
+	
+	method cantidadDePlantas() {
+		return plantas.size()
 	}
 	
+	method tieneMasDe4Plantas() {
+		return self.cantidadDePlantas() > 4
+	}
+	
+	method cantidadDeBienAsociadas() {
+		return plantas.count({
+			p => p.parcelaIdeal(self) == true
+		})
+	}
+}
+
+class ParcelaEcologica inherits Parcela {
+	
+	method seAsociaBien(unaPlanta) {
+		return not self.tieneComplicaciones() and unaPlanta.parcelaIdeal(self)
+	} 
+}
+
+class ParcelaIndustrial inherits Parcela {
+	
+	method seAsociaBien(unaPlanta) {
+		return self.cantidadMaxima() == 2 and unaPlanta.esFuerte()
+	}
 }
 
 class UserException inherits Exception {}

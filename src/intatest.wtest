@@ -1,0 +1,63 @@
+import parcelas.*
+import plantas.*
+import inta.*
+
+describe "Test de Inta"  {
+	
+	const menta1 = new Menta(anioDeObtencion = 2022, altura = 1)
+	const menta2 = new Menta(anioDeObtencion = 2022, altura = 0.3)
+	const soja1 = new Soja(anioDeObtencion = 2009, altura = 0.6)
+	const soja2 = new Soja(anioDeObtencion = 2009, altura = 1.6)
+	const quinoa1 = new Quinoa(tolerancia = 12, anioDeObtencion = 2010, altura = 1)
+	const quinoa3 = new Quinoa(tolerancia = 5, anioDeObtencion = 2001, altura = 1)
+	
+	const sojaTransgenica1 = new SojaTransgenica(anioDeObtencion = 2009, altura = 0.6)
+	const hierbabuena1 = new Hierbabuena(anioDeObtencion = 2022, altura = 1)
+	
+	const parcela1 = new Parcela(ancho = 20, largo = 1, horasDeSol = 8)
+	const parcela2 = new Parcela(ancho = 20, largo = 1, horasDeSol = 7)
+	const parcela3 = new Parcela(ancho = 5, largo = 1, horasDeSol = 6)
+	
+	const parcelaEcologica1 = new ParcelaEcologica(ancho = 20, largo = 1, horasDeSol = 7)
+	const parcelaEcologica2 = new ParcelaEcologica(ancho = 80, largo = 2, horasDeSol = 7) //32 cantidad
+	const parcelaIndustrial1 = new ParcelaIndustrial(ancho = 10, largo = 1, horasDeSol = 7)
+	
+	
+	test "Promedio de plantas por parcela" {
+		
+		inta.agregarParcela(parcela1)
+		inta.agregarParcela(parcela2)
+		inta.agregarParcela(parcela3)
+		
+		parcela1.plantar(soja1)
+		parcela1.plantar(soja1)
+		parcela2.plantar(quinoa1)
+		parcela2.plantar(quinoa1)
+		parcela2.plantar(quinoa1)
+		parcela3.plantar(quinoa3)
+		
+		assert.equals(2, inta.promedioDePlantas())
+	}
+	
+	test "Parcela más autosustentable" {
+		
+		inta.agregarParcela(parcelaEcologica1)
+		inta.agregarParcela(parcelaEcologica2)
+		
+		parcelaEcologica1.plantar(soja1)
+		parcelaEcologica1.plantar(soja1)
+		parcelaEcologica1.plantar(soja1)
+		parcelaEcologica1.plantar(soja1)
+		parcelaEcologica1.plantar(soja1)
+		parcelaEcologica2.plantar(soja1)
+		
+		parcelaEcologica2.plantar(soja1)
+		parcelaEcologica2.plantar(soja1)
+		parcelaEcologica2.plantar(soja1)
+		parcelaEcologica2.plantar(soja1)
+		parcelaEcologica2.plantar(soja1)
+		
+		assert.equals(parcelaEcologica1, inta.masAutosustentable())
+	}
+	
+}

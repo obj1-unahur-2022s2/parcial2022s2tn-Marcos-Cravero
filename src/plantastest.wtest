@@ -11,9 +11,6 @@ describe "Test de Plantas"  {
 	const sojaTransgenica1 = new SojaTransgenica(anioDeObtencion = 2009, altura = 0.6)
 	const hierbabuena1 = new Hierbabuena(anioDeObtencion = 2022, altura = 1)
 	
-	method initialize() {
-
-	}
 	
 	test "Menta de 1m da semillas y ocupa 3m2" {
 		
