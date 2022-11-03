@@ -1,3 +1,9 @@
+/*
+ * La condicion en planta self.cantidadMaxima() < plantas.size() debía ser == o en todo caso <=
+ * Recordá que al lanzar un Excepción corta la ejecución del método y por eso no es necesario encadenar con el else
+ * Quizaś el método seAsociaBien(unaPlanta) debía ser  abstracto de Parcela y sobreescribirlo en las clase heredadas, pero eso te obligaba a camibar los test
+ * Comparar un método que retorna un boolano contra true o false no es buena practica y es innecesario .parcelaIdeal(self) == true 
+ */
 import plantas.*
 
 class Parcela {
@@ -24,13 +30,14 @@ class Parcela {
 	
 	method plantar(unaPlanta) {
 		
-		if(self.cantidadMaxima() < plantas.size()) {
+		if(self.cantidadMaxima() == plantas.size()) {
 			throw new UserException(message = "No hay más espacio para plantar")  
-		} else if (unaPlanta.tolerancia() < horasDeSol - 2) {
-			throw new UserException(message = "La planta no tolera las horas de calor")  
-		} else {
-			plantas.add(unaPlanta)
 		}
+		if (unaPlanta.tolerancia() < horasDeSol - 2) {
+			throw new UserException(message = "La planta no tolera las horas de calor")  
+		}
+		plantas.add(unaPlanta)
+		
 	}	
 	
 	method cantidadDePlantas() {
@@ -43,9 +50,11 @@ class Parcela {
 	
 	method cantidadDeBienAsociadas() {
 		return plantas.count({
-			p => p.parcelaIdeal(self) == true
+			p => p.parcelaIdeal(self) 
 		})
 	}
+	
+	//method seAsociaBien(unaPlanta)
 }
 
 class ParcelaEcologica inherits Parcela {
@@ -58,7 +67,7 @@ class ParcelaEcologica inherits Parcela {
 class ParcelaIndustrial inherits Parcela {
 	
 	method seAsociaBien(unaPlanta) {
-		return self.cantidadMaxima() == 2 and unaPlanta.esFuerte()
+		return self.cantidadMaxima() <= 2 and unaPlanta.esFuerte()
 	}
 }
 

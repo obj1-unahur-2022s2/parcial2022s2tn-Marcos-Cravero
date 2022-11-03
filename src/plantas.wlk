@@ -1,3 +1,7 @@
+/*
+ * El método tolerancia() de Hierbabuena es innecesario, por es heredado de Menta y tiene le mismo código que el de Menta
+ * El método daSemillas() de Hierbabuena tampoco debía estar, porque ademas de ser innesesario por es heredado de Menta, en este caso la hacer un super() esta llamando al de Menta y el de Menta esta llamando al de Plata.   
+ */
 import parcelas.*
 
 class Planta {
